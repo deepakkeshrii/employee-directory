@@ -2,7 +2,30 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Check local Git status",
+			"label": "Review pending Git changes",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"git diff --check; git status --short; git diff --stat; git diff -- frontend/src/app/page.tsx frontend/src/app/globals.css"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Inspect baseline tasks config",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"show",
+				"HEAD:.vscode/tasks.json"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Check current change summary",
 			"type": "shell",
 			"command": "git",
 			"args": [
@@ -14,24 +37,134 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Check Git remotes",
+			"label": "Check current Git status",
 			"type": "shell",
 			"command": "git",
 			"args": [
-				"remote",
-				"-v"
+				"status",
+				"--short",
+				"--branch"
 			],
 			"isBackground": false,
 			"problemMatcher": []
 		},
 		{
-			"label": "Inspect local and remote branches",
+			"label": "Confirm upload state",
 			"type": "shell",
 			"command": "powershell",
 			"args": [
 				"-NoProfile",
 				"-Command",
-				"git status --short --branch; git branch -vv; git log -1 --oneline; git ls-remote --heads origin"
+				"git status --short --branch; git log -3 --oneline --decorate; git ls-remote --heads origin"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit review README",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"git add README.md; if ($LASTEXITCODE -eq 0) { git diff --cached --check; git commit -m \"Add project review instructions\" }"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Check staged README",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short",
+				"--branch"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Inspect unstaged README diff",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"diff",
+				"--",
+				"README.md"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Inspect staged README diff",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"diff",
+				"--cached",
+				"--",
+				"README.md"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Validate review README",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"diff",
+				"--check",
+				"--",
+				"README.md"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Stage reviewer README",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"add",
+				"README.md"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Commit reviewer guide",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"commit",
+				"-m",
+				"docs: add HR review instructions"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Push reviewer guide to GitHub",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"push",
+				"origin",
+				"main"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify final Git status",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"status",
+				"--short",
+				"--branch"
 			],
 			"isBackground": false,
 			"problemMatcher": []
