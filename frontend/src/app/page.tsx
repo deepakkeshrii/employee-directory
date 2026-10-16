@@ -161,7 +161,7 @@ export default function Home() {
             </span>
           </div>
 
-          {loadError && <p role="alert">{loadError}</p>}
+          {loadError && <div className="alert alert-danger py-2" role="alert">{loadError}</div>}
           {isLoading ? (
             <p>Loading employees...</p>
           ) : filteredEmployees.length === 0 ? (
